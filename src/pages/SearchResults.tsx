@@ -14,7 +14,8 @@ export default function SearchResults() {
   const [params] = useSearchParams();
   const q = params.get("q") ?? "";
   const rawType = (params.get("type") || "all").toLowerCase();
-  const type: TypeFilter = rawType === "movie" ? "movie" : rawType === "series" ? "series" : "all";
+  const type: TypeFilter =
+    rawType === "movie" ? "movie" : rawType === "series" ? "series" : "all";
 
   const navigate = useNavigate();
 
@@ -29,7 +30,6 @@ export default function SearchResults() {
     setPage,
   } = useOmdbSearch();
 
-  // Modal state
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   // sync avec l’URL sans boucle infinie
@@ -72,7 +72,8 @@ export default function SearchResults() {
   };
 
   // style petit toggle (sobre)
-  const chip = "text-sm px-3 py-1.5 rounded-full border transition cursor-pointer";
+  const chip =
+    "text-sm px-3 py-1.5 rounded-full border transition cursor-pointer";
   const active = "border-white/30 bg-white/10";
   const inactive = "border-neutral-800 text-neutral-300 hover:bg-neutral-900";
 
@@ -97,15 +98,18 @@ export default function SearchResults() {
             <div className="flex items-end justify-between">
               <div>
                 <h2 className="text-xl font-semibold">
-                  Résultats pour « {q} » {type !== "all" && (
-                    <span className="text-neutral-400">· {type === "movie" ? "Films" : "Séries"}</span>
+                  Résultats pour « {q} »{" "}
+                  {type !== "all" && (
+                    <span className="text-neutral-400">
+                      · {type === "movie" ? "Films" : "Séries"}
+                    </span>
                   )}
                 </h2>
                 {error && <p className="text-red-300 mt-1">{error}</p>}
               </div>
 
               {/* Pagination */}
-               <Pagination page={page} pages={pages} prev={prev} next={next} />
+              <Pagination page={page} pages={pages} prev={prev} next={next} />
             </div>
 
             {/* Toggle All / Films / Séries */}
@@ -158,7 +162,10 @@ export default function SearchResults() {
 
       {/* Modal détail */}
       {selectedId && (
-        <MovieDetailModal imdbID={selectedId} onClose={() => setSelectedId(null)} />
+        <MovieDetailModal
+          imdbID={selectedId}
+          onClose={() => setSelectedId(null)}
+        />
       )}
     </div>
   );

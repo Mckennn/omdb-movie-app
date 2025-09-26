@@ -32,6 +32,7 @@ export async function getRandomList(count = 11): Promise<OmdbSearchItem[]> {
   for (const p of pages) {
     try {
       const data = await searchOmdb(seed, p);
+
       for (const m of data.Search || []) {
         if (m.Poster && m.Poster !== "N/A" && !seen.has(m.imdbID)) {
           out.push(m);
@@ -40,6 +41,7 @@ export async function getRandomList(count = 11): Promise<OmdbSearchItem[]> {
         }
       }
       if (out.length >= count) break;
+      
     } catch {
       // ignore la page qui a timeout (522/abort), on tente la suivante
     }

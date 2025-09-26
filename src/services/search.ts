@@ -7,7 +7,10 @@ export async function searchOmdb(
   type?: "movie" | "series"
 ) {
   const params: Record<string, string> = { s: q, page: String(page) };
+
   if (type) params.type = type;
+
   const data = (await apiGet(params)) as OmdbSearchResponse;
+
   return data;
 }

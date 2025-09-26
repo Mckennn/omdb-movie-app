@@ -20,13 +20,16 @@ export async function apiGet(params: Record<string, string>, timeoutMs = 6000) {
   for (let attempt = 0; attempt < 3; attempt++) {
     const controller = new AbortController();
     const t = setTimeout(() => controller.abort("timeout"), timeoutMs);
+
     try {
       const res = await fetch(url.toString(), { signal: controller.signal });
+
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
       return await res.json();
     } catch (e) {
       lastErr = e;
-      // backoff soft
+
       await sleep(300 * attempt);
     } finally {
       clearTimeout(t);

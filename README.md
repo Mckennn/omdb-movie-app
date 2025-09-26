@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+🎬 LucasFlix Search
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Mini app React + TS (Vite) pour explorer OMDb : landing avec un film “héros”, carrousel, recherche avec historique + suggestions, filtres All / Films / Series, pagination, et fiche détaillée en modal.
 
-Currently, two official plugins are available:
+Setup rapide
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Prérequis : Node 18+
 
-## React Compiler
+# 1) Dépendances
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+npm install
 
-## Expanding the ESLint configuration
+# 2) Variables d'env
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# crée .env à la racine :
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# VITE_OMDB_API_KEY=ta_cle
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# 3) Lancer en dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+npm run dev
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# build / preview
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+npm run build
+npm run preview
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+.env.example
+
+VITE_OMDB_API_KEY=
+
+Arbo (condensée)
+src/
+components/ # layout, movies (Hero, Carousel, Modal…), inputs (SearchBar), feedback, navigation
+hooks/ # useOmdbSearch, useRandomShowcase, useHeroDetails, useHorizontalScroll, useSearchSuggestions
+services/ # apiClient, search, random, index (getMovieById), history (recherches récentes)
+pages/ # Home, SearchResults
+types/ # omdb types
+styles/ # ui (petits helpers de styles)
+
+Ce que ça fait
+
+Landing : un film “héros” + carrousel scrollable (chevrons).
+
+Recherche : historique local (clear), suggestions live (debounce + cache), filtres All/Films/Series.
+
+Résultats : pagination simple, grille 5 colonnes en desktop.
+
+Détail : modal plein écran (grande affiche, infos, lien IMDb).
+
+Note OMDb / proxy
+
+OMDb peut être lent (erreurs 522).
+En dev, on passe par /omdb (proxy Vite) pour éviter CORS. En prod, soit tu gardes un rewrite /omdb → https://www.omdbapi.com, soit tu appelles l’URL OMDb directe.

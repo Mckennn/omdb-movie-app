@@ -1,14 +1,14 @@
 export interface OmdbSearchItem {
   Title: string;
-  Year: string;           // ex: "2012–2016" possible pour les séries
+  Year: string; // ex: "2012–2016" possible pour les séries
   imdbID: string;
   Type: "movie" | "series" | string;
-  Poster: string;         // peut être "N/A"
+  Poster: string; // peut être "N/A"
 }
 
 export interface OmdbSearchResponse {
   Search?: OmdbSearchItem[];
-  totalResults?: string;  // nombre en string
+  totalResults?: string; // nombre en string
   Response: "True" | "False";
   Error?: string;
 }
